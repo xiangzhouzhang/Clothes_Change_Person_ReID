@@ -1,0 +1,10 @@
+_BASE_: "../Base-bagtricks.yml"
+
+DATASETS:
+  NAMES: ("LTCC",)
+  TESTS: ("LTCC",)
+
+OUTPUT_DIR: "logs/LTCC/bagtricks_R50"
+
+DATALOADER:
+  IS_CLO_CHANGES: True
