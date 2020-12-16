@@ -92,8 +92,8 @@ Theses models are trained for 120 epochs with batch size=64 on 2 GeForce GTX TIT
     <td align="center">Rank@1</td>
     <td align="center">Rank@5</td>
     <td align="center">mAP</td>
-    <td align="center">Rank@5</td>
     <td align="center">Rank@1</td>
+    <td align="center">Rank@5</td>
     <td align="center">mAP</td>
   </tr>
 </thead>
