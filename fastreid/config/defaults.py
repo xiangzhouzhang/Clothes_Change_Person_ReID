@@ -262,6 +262,9 @@ _C.TEST.PRECISE_BN.ENABLED = False
 _C.TEST.PRECISE_BN.DATASET = 'Market1501'
 _C.TEST.PRECISE_BN.NUM_ITER = 300
 
+# Only for Clothes Change
+_C.TEST.USE_ONLY_CLO = False
+
 # ---------------------------------------------------------------------------- #
 # Misc options
 # ---------------------------------------------------------------------------- #

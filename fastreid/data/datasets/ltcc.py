@@ -65,7 +65,6 @@ class LTCC(ImageDataset):
 
     def process_dir(self, dir_path, is_train=True):
         img_paths = glob.glob(osp.join(dir_path, '*.png'))
-        # pattern = re.compile(r'([-\d]+)_c(\d)')
 
         pattern = re.compile(r'([-\d]+)_([-\d]+)_c([-\d]+)')
 
@@ -74,18 +73,20 @@ class LTCC(ImageDataset):
             pid, cloid, camid = map(int, pattern.search(img_path).groups())
             if pid == -1:
                 continue  # junk images are just ignored
-            assert 0 <= pid <= 151  # pid == 0 means background
+            assert 0 <= pid <= 151  # pid == 0 means background  (but we do not have background class)
             assert 1 <= camid <= 12
             assert cloid >= 1
             camid -= 1  # index starts from 0
             cloid -= 1  # index starts from 0
-            if is_train:
-                pid = self.dataset_name + "_" + str(pid)
-                camid = self.dataset_name + "_" + str(camid)
-                cloid = str(pid) + "_" + str(cloid)
-
+            # if is_train:
+            #     pid = self.dataset_name + "_" + str(pid)
+            #     camid = self.dataset_name + "_" + str(camid)
+            #     cloid = str(pid) + "_" + str(cloid)
+            pid = self.dataset_name + "_" + str(pid)
+            camid = self.dataset_name + "_" + str(camid)
+            cloid = str(pid) + "_" + str(cloid)
+           
             data.append((img_path, pid, camid, cloid))
-        # import pdb; pdb.set_trace()
         return data
     
     def parse_data(self, data):

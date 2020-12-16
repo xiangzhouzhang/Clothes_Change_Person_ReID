@@ -14,7 +14,7 @@ import torch.nn.functional as F
 
 from .evaluator import DatasetEvaluator
 from .query_expansion import aqe
-from .rank import evaluate_rank
+from .rank import evaluate_rank, evaluate_py_clothes
 from .rerank import re_ranking
 from .roc import evaluate_roc
 from fastreid.utils import comm
@@ -28,19 +28,27 @@ class ReidEvaluator(DatasetEvaluator):
         self.cfg = cfg
         self._num_query = num_query
         self._output_dir = output_dir
+        self.use_clothes = cfg.TEST.USE_ONLY_CLO
 
         self.features = []
         self.pids = []
         self.camids = []
+        if self.use_clothes:
+            self.cloids = []
 
     def reset(self):
         self.features = []
         self.pids = []
         self.camids = []
+        if self.use_clothes:
+            self.cloids = []
+        
 
     def process(self, inputs, outputs):
         self.pids.extend(inputs["targets"])
         self.camids.extend(inputs["camids"])
+        if self.use_clothes:
+            self.cloids.extend(inputs['clothids'])
         self.features.append(outputs.cpu())
 
     def evaluate(self):
@@ -55,13 +63,20 @@ class ReidEvaluator(DatasetEvaluator):
             camids = comm.gather(self.camids)
             camids = sum(camids, [])
 
+            if self.use_clothes:
+                cloids = comm.gather(self.cloids)
+                cloids = sum(cloids, [])
+
             # fmt: off
             if not comm.is_main_process(): return {}
             # fmt: on
         else:
-            features = self.features
+            # num_query + num_gallery
+            features = self.features 
             pids = self.pids
             camids = self.camids
+            if self.use_clothes:
+                cloids = self.cloids
 
         features = torch.cat(features, dim=0)
         # query feature, person ids and camera ids
@@ -74,6 +89,10 @@ class ReidEvaluator(DatasetEvaluator):
         gallery_pids = np.asarray(pids[self._num_query:])
         gallery_camids = np.asarray(camids[self._num_query:])
 
+        if self.use_clothes:
+            query_cloids = np.asarray(cloids[:self._num_query])
+            gallery_cloids = np.asarray(cloids[self._num_query:])
+
         self._results = OrderedDict()
 
         if self.cfg.TEST.AQE.ENABLED:
@@ -83,6 +102,7 @@ class ReidEvaluator(DatasetEvaluator):
             alpha = self.cfg.TEST.AQE.ALPHA
             query_features, gallery_features = aqe(query_features, gallery_features, qe_time, qe_k, alpha)
 
+        # Cosine default
         dist = build_dist(query_features, gallery_features, self.cfg.TEST.METRIC)
 
         if self.cfg.TEST.RERANK.ENABLED:
@@ -98,7 +118,10 @@ class ReidEvaluator(DatasetEvaluator):
             rerank_dist = build_dist(query_features, gallery_features, metric="jaccard", k1=k1, k2=k2)
             dist = rerank_dist * (1 - lambda_value) + dist * lambda_value
 
-        cmc, all_AP, all_INP = evaluate_rank(dist, query_pids, gallery_pids, query_camids, gallery_camids)
+        if self.use_clothes:
+            cmc, all_AP, all_INP = evaluate_py_clothes(dist, query_pids, gallery_pids, query_camids, gallery_camids, query_cloids, gallery_cloids)
+        else:
+            cmc, all_AP, all_INP = evaluate_rank(dist, query_pids, gallery_pids, query_camids, gallery_camids)
 
         mAP = np.mean(all_AP)
         mINP = np.mean(all_INP)

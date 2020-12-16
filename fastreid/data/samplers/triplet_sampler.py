@@ -109,6 +109,7 @@ class NaiveIdentitySampler(Sampler):
     """
 
     def __init__(self, data_source: str, batch_size: int, num_instances: int, seed: Optional[int] = None, clothes: Optional[bool] = False):
+
         self.data_source = data_source
         self.batch_size = batch_size
         self.num_instances = num_instances
@@ -146,9 +147,11 @@ class NaiveIdentitySampler(Sampler):
         yield from itertools.islice(self._infinite_indices(), start, None, self._world_size)
 
     def _infinite_indices(self):
+
+        # import pdb; pdb.set_trace()
         np.random.seed(self._seed)
         while True:
-            avai_pids = copy.deepcopy(self.pids)
+            avai_pids = copy.deepcopy(self.pids) 
             batch_idxs_dict = {}
 
             batch_indices = []

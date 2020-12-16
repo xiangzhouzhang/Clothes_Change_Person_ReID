@@ -113,6 +113,7 @@ def inference_on_dataset(model, data_loader, evaluator):
             start_compute_time = time.perf_counter()
             outputs = model(inputs)
             total_compute_time += time.perf_counter() - start_compute_time
+            
             evaluator.process(inputs, outputs)
 
             idx += 1

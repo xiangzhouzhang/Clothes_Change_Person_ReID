@@ -28,6 +28,7 @@ def build_reid_train_loader(cfg):
         if comm.is_main_process():
             dataset.show_train()
         train_items.extend(dataset.train)
+
     iters_per_epoch = len(train_items) // cfg.SOLVER.IMS_PER_BATCH
     cfg.SOLVER.MAX_ITER *= iters_per_epoch
     train_transforms = build_transforms(cfg, is_train=True)

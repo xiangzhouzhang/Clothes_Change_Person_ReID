@@ -63,7 +63,7 @@ class CCDatasets(Dataset):
             self.img_items = img_items
             self.transform = transform
             self.relabel = relabel
-
+            
             pid_set = set()
             cam_set = set()
             clo_set = set()
@@ -71,7 +71,7 @@ class CCDatasets(Dataset):
                 pid_set.add(i[1])
                 cam_set.add(i[2])
                 clo_set.add(i[3])
-
+            
             self.pids = sorted(list(pid_set))
             self.cams = sorted(list(cam_set))
             self.clos = sorted(list(clo_set))
