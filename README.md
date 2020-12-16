@@ -6,6 +6,7 @@ The code is based on [Fast-reid](https://github.com/JDAI-CV/fast-reid).
 
 ## News
 + [2020.12.15] LTCC datasets is supported.
++ [2020.12.16] Add evaluation code for cholthes-changes setting 
 
 ## Installation
 
