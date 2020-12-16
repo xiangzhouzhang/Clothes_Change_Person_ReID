@@ -77,7 +77,7 @@ For more options, see `python ./tools/train_net.py -h`.
 
 We provide some baseline results and trained models available for download:
 
-The model is trained for 120 epochs with batch size=64 on 2 GeForce GTX TITAN X.
+Theses models are trained for 120 epochs with batch size=64 on 2 GeForce GTX TITAN X.
 
 <table>
 <thead>
