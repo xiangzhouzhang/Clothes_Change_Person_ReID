@@ -102,7 +102,6 @@ class LTCC(ImageDataset):
             pids.add(pid)
             cams.add(camid)
             clos.add(cloid)
-            
         return len(pids), len(cams), len(clos)
     
     def get_num_clos(self, data):
@@ -131,8 +130,8 @@ class LTCC(ImageDataset):
     def show_train(self):
         num_train_pids, num_train_cams, num_train_clos = self.parse_data(self.train)
 
-        headers = ['subset', '# ids', '# images', '# cameras']
-        csv_results = [['train', num_train_pids, len(self.train), num_train_cams]]
+        headers = ['subset', '# ids', '# images', '# cameras', '# clothes']
+        csv_results = [['train', num_train_pids, len(self.train), num_train_cams, num_train_clos]]
 
         # tabulate it
         table = tabulate(
@@ -147,10 +146,10 @@ class LTCC(ImageDataset):
         num_query_pids, num_query_cams, num_query_clos = self.parse_data(self.query)
         num_gallery_pids, num_gallery_cams, num_gallery_clos = self.parse_data(self.gallery)
 
-        headers = ['subset', '# ids', '# images', '# cameras']
+        headers = ['subset', '# ids', '# images', '# cameras', '# clothes']
         csv_results = [
-            ['query', num_query_pids, len(self.query), num_query_cams],
-            ['gallery', num_gallery_pids, len(self.gallery), num_gallery_cams],
+            ['query', num_query_pids, len(self.query), num_query_cams, num_query_clos],
+            ['gallery', num_gallery_pids, len(self.gallery), num_gallery_cams, num_gallery_clos],
         ]
 
         # tabulate it

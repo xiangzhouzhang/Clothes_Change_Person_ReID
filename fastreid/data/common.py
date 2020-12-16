@@ -71,7 +71,6 @@ class CCDatasets(Dataset):
                 pid_set.add(i[1])
                 cam_set.add(i[2])
                 clo_set.add(i[3])
-            
             self.pids = sorted(list(pid_set))
             self.cams = sorted(list(cam_set))
             self.clos = sorted(list(clo_set))
@@ -85,7 +84,6 @@ class CCDatasets(Dataset):
         return len(self.img_items)
 
     def __getitem__(self, index):
-        
         img_path, pid, camid, cloid = self.img_items[index]
         img = read_image(img_path)
         if self.transform is not None: 
@@ -105,6 +103,7 @@ class CCDatasets(Dataset):
     @property
     def num_classes(self):
         return len(self.pids)
+
 
     @property
     def num_cameras(self):

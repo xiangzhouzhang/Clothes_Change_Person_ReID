@@ -14,17 +14,20 @@ from .build import REID_HEADS_REGISTRY
 
 @REID_HEADS_REGISTRY.register()
 class EmbeddingHead(nn.Module):
-    def __init__(self, cfg):
+    def __init__(self, cfg, use_clothes=False):
         super().__init__()
         # fmt: off
         feat_dim      = cfg.MODEL.BACKBONE.FEAT_DIM
         embedding_dim = cfg.MODEL.HEADS.EMBEDDING_DIM
         num_classes   = cfg.MODEL.HEADS.NUM_CLASSES
-        neck_feat     = cfg.MODEL.HEADS.NECK_FEAT
+        neck_feat     = cfg.MODEL.HEADS.NECK_FEAT  #Triplet feature using feature before(after) bnneck
         pool_type     = cfg.MODEL.HEADS.POOL_LAYER
         cls_type      = cfg.MODEL.HEADS.CLS_LAYER
         with_bnneck   = cfg.MODEL.HEADS.WITH_BNNECK
         norm_type     = cfg.MODEL.HEADS.NORM
+
+        if use_clothes:
+            num_classes = cfg.MODEL.HEADS.NUM_CLO_CLASSES
 
         if pool_type == 'fastavgpool':   self.pool_layer = FastGlobalAvgPool2d()
         elif pool_type == 'avgpool':     self.pool_layer = nn.AdaptiveAvgPool2d(1)
@@ -66,7 +69,6 @@ class EmbeddingHead(nn.Module):
         """
         See :class:`ReIDHeads.forward`.
         """
-        # import pdb; pdb.set_trace()
         global_feat = self.pool_layer(features)
         bn_feat = self.bottleneck(global_feat)
         bn_feat = bn_feat[..., 0, 0]

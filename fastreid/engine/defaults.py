@@ -56,6 +56,8 @@ def default_argument_parser():
         "--machine-rank", type=int, default=0, help="the rank of this machine (unique per machine)"
     )
 
+    parser.add_argument("--cconly", action="store_true", help="Use clothes-change setting during testing")
+
     # PyTorch still may leave orphan processes in multi-gpu training.
     # Therefore we use a deterministic way to obtain port,
     # so that users are aware of orphan processes by seeing the port occupied.
@@ -483,6 +485,9 @@ class DefaultTrainer(SimpleTrainer):
                 path = os.path.join(output_dir, "config.yaml")
                 with PathManager.open(path, "w") as f:
                     f.write(cfg.dump())
+
+        if cfg.MODEL.LOSSES.USE_CLOTHES:
+            cfg.MODEL.HEADS.NUM_CLO_CLASSES = data_loader.dataset.num_clothes
 
         iters_per_epoch = len(data_loader.dataset) // cfg.SOLVER.IMS_PER_BATCH
         cfg.SOLVER.MAX_ITER *= iters_per_epoch

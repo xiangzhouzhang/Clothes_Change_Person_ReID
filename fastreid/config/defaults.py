@@ -56,6 +56,10 @@ _C.MODEL.HEADS.NAME = "EmbeddingHead"
 _C.MODEL.HEADS.NORM = "BN"
 # Number of identity
 _C.MODEL.HEADS.NUM_CLASSES = 0
+
+# Number of clothes 
+_C.MODEL.HEADS.NUM_CLO_CLASSES = 0
+
 # Embedding dimension in head
 _C.MODEL.HEADS.EMBEDDING_DIM = 0
 # If use BNneck in embedding
@@ -72,11 +76,15 @@ _C.MODEL.HEADS.CLS_LAYER = "linear"  # "arcSoftmax" or "circleSoftmax"
 _C.MODEL.HEADS.MARGIN = 0.15
 _C.MODEL.HEADS.SCALE = 128
 
+
 # ---------------------------------------------------------------------------- #
 # REID LOSSES options
 # ---------------------------------------------------------------------------- #
 _C.MODEL.LOSSES = CN()
 _C.MODEL.LOSSES.NAME = ("CrossEntropyLoss",)
+
+# Use CE loss for Clothes
+_C.MODEL.LOSSES.USE_CLOTHES = False
 
 # Cross Entropy Loss options
 _C.MODEL.LOSSES.CE = CN()

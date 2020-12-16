@@ -99,6 +99,7 @@ def triplet_loss(embedding, targets, margin, norm_feat, hard_mining):
         all_targets = targets
 
     dist_mat = euclidean_dist(all_embedding, all_embedding)
+    #dist_mat = cosine_dist(all_embedding, all_embedding)
 
     N, N = dist_mat.size()
     is_pos = all_targets.view(N, 1).expand(N, N).eq(all_targets.view(N, 1).expand(N, N).t())

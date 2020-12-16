@@ -8,8 +8,8 @@ OUTPUT_DIR: "logs/LTCC/bagtricks_R50"
 
 MODEL:
   LOSSES:
-    NAME: ("CrossEntropyLoss",)
-
+    NAME: ("CrossEntropyLoss", )
+    USE_CLOTHES: True
     CE:
         EPSILON: 0.1
         SCALE: 1.
@@ -18,9 +18,11 @@ INPUT:
   SIZE_TRAIN: [384, 192]
   SIZE_TEST: [384, 192]
 
+SOLVER:
+  IMS_PER_BATCH: 64
 
 DATALOADER:
-  PK_SAMPLER: False
+  PK_SAMPLER: True
   NUM_INSTANCE: 4
   NUM_WORKERS: 8
   IS_CLO_CHANGES: True

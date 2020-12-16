@@ -16,9 +16,9 @@ The call is expected to return an :class:`ROIHeads`.
 """
 
 
-def build_heads(cfg):
+def build_heads(cfg, use_clothes=False):
     """
     Build REIDHeads defined by `cfg.MODEL.REID_HEADS.NAME`.
     """
     head = cfg.MODEL.HEADS.NAME
-    return REID_HEADS_REGISTRY.get(head)(cfg)
+    return REID_HEADS_REGISTRY.get(head)(cfg, use_clothes)
