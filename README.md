@@ -123,3 +123,7 @@ The model is trained for 120 epochs with batch size=64 on 2 GeForce GTX TITAN X.
 </tbody>
 </table>
 
+## License
+
+The code is released under the [Apache 2.0 license](https://github.com/xiangzhouzhang/Clothes_Change_Person_ReID/blob/master/LICENSE).
+
