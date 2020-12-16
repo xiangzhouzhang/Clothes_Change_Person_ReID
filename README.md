@@ -100,7 +100,7 @@ The model is trained for 120 epochs with batch size=64 on 2 GeForce GTX TITAN X.
 <tbody>
   <tr>
     <td nowrap align="center">Baseline</td>
-    <td align="center">ResNet-50</td>
+    <td align="center">R50</td>
     <td align="center">67.55%</td>
     <td align="center">77.48%</td>
     <td align="center">32.64%</td>
@@ -110,8 +110,8 @@ The model is trained for 120 epochs with batch size=64 on 2 GeForce GTX TITAN X.
     <td align="center">-</td>
   </tr>
   <tr>
-    <td nowrap align="center">Baseline(w/ cloth)</td>
-    <td align="center">ResNet-50</td>
+    <td nowrap align="center">Baseline(w/ clo)</td>
+    <td align="center">R50</td>
     <td align="center">73.43%</td>
     <td align="center">81.74%</td>
     <td align="center">38.54%</td>
