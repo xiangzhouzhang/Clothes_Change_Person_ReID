@@ -100,7 +100,7 @@ Theses models are trained for 120 epochs with batch size=64 on 2 GeForce GTX TIT
 <tbody>
   <tr>
     <td nowrap align="center">Baseline</td>
-    <td align="center">R50</td>
+    <td align="center">Res-50</td>
     <td align="center">67.55%</td>
     <td align="center">77.48%</td>
     <td align="center">32.64%</td>
@@ -111,7 +111,7 @@ Theses models are trained for 120 epochs with batch size=64 on 2 GeForce GTX TIT
   </tr>
   <tr>
     <td nowrap align="center">Baseline(w/ clo)</td>
-    <td align="center">R50</td>
+    <td align="center">Res-50</td>
     <td align="center">73.43%</td>
     <td align="center">81.74%</td>
     <td align="center">38.54%</td>
